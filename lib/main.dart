@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:hw4/GetUserInfo.dart';
 
-import 'src/app.dart';
-import 'src/settings/settings_controller.dart';
-import 'src/settings/settings_service.dart';
-
-void main(){
+void main() {
   runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: GetUserInfo(),
+    );
+  }
 }
