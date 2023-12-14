@@ -1,0 +1,1 @@
+ C:\\Users\\Asus\\Desktop\\HW4\\.dart_tool\\flutter_gen\\gen_l10n\\app_localizations_en.dart C:\\Users\\Asus\\Desktop\\HW4\\.dart_tool\\flutter_gen\\gen_l10n\\app_localizations.dart:  C:\\Users\\Asus\\Desktop\\HW4\\l10n.yaml C:\\Users\\Asus\\Desktop\\HW4\\lib/src/localization\\app_en.arb
