@@ -4,18 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: camel_case_types
-class onBoard extends StatefulWidget {
+class onBoard extends StatelessWidget {
   const onBoard({super.key});
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _onBoardState createState() {
-    return _onBoardState();
-  }
-}
-
-// ignore: camel_case_types
-class _onBoardState extends State<onBoard> {
+  
   _storeOnBoardInfo() async {
     int isViewed = 0;
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -60,6 +51,9 @@ class _onBoardState extends State<onBoard> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            ])));
+            ]
+        )
+      )
+    );
   }
 }

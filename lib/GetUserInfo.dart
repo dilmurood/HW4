@@ -15,6 +15,7 @@ class GetUserInfo extends StatefulWidget {
 class GetUserInfoState extends State<GetUserInfo> {
   int size = 100;
   List<dynamic> userData = [];
+  
   @override
   void initState() {
     super.initState();
@@ -69,7 +70,6 @@ class GetUserInfoState extends State<GetUserInfo> {
                 child: ListView.builder(
                     itemCount: size,
                     itemBuilder: (BuildContext context, int index) {
-                      index = index + 1;
                       return ListTile(
                         title: Text(
                           "${'$index.'} ${userData[index]['name']['first']} ${userData[index]['name']['last']}",
@@ -81,6 +81,7 @@ class GetUserInfoState extends State<GetUserInfo> {
                           style: const TextStyle(
                               color: Colors.black, fontSize: 16),
                         ),
+                        trailing: Icon(Icons.add),
                       );
                     }),
               )

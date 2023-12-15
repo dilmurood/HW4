@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:isViewed != 0 ? const onBoard() :const GetUserInfo(),
+      home: isViewed != 0 ? const onBoard() :const GetUserInfo(),
       initialRoute: '/',
       routes: {
         '/GetUserInfo': (context) => const GetUserInfo(),
