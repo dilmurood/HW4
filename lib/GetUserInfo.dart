@@ -15,7 +15,7 @@ class GetUserInfo extends StatefulWidget {
 class GetUserInfoState extends State<GetUserInfo> {
   int size = 100;
   List<dynamic> userData = [];
-  
+
   @override
   void initState() {
     super.initState();
@@ -71,6 +71,12 @@ class GetUserInfoState extends State<GetUserInfo> {
                     itemCount: size,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
+                        leading: CircleAvatar(
+                          //child: Icon(Icons.person)
+                          backgroundImage: NetworkImage("${userData[index]['picture']['thumbnail']}")
+                        
+                        ),
+                        dense: true,
                         title: Text(
                           "${'$index.'} ${userData[index]['name']['first']} ${userData[index]['name']['last']}",
                           style: const TextStyle(
@@ -81,7 +87,12 @@ class GetUserInfoState extends State<GetUserInfo> {
                           style: const TextStyle(
                               color: Colors.black, fontSize: 16),
                         ),
-                        trailing: Icon(Icons.add),
+                        trailing: TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                              backgroundColor: Colors.white),
+                          child: const Icon(Icons.add),                        
+                        ),
                       );
                     }),
               )
