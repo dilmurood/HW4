@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hw4/DisplayUserInfo.dart';
 import 'package:hw4/GetUserInfo.dart';
 import 'package:hw4/onBoard.dart';
+import 'package:hw4/userModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 int? isViewed;
@@ -23,11 +24,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: isViewed != 0 ? const onBoard() :const GetUserInfo(),
+      home: isViewed != 0 ? const onBoard() : const GetUserInfo(),
       initialRoute: '/',
       routes: {
         '/GetUserInfo': (context) => const GetUserInfo(),
-        '/DisplayUserInfo': (context) => const DisplayUserInfo(),
+        '/DisplayUserInfo': (context) => DisplayUserInfo(),
+        '/GetUserInfo': (context) => const GetUserInfo(),
       },
     );
   }

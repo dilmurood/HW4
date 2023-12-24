@@ -1,9 +1,10 @@
 import 'dart:convert';
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:hw4/DisplayUserInfo.dart';
+import 'package:hw4/userModel.dart';
+
+import 'CustomWidgets/CustomListTile.dart';
 
 class GetUserInfo extends StatefulWidget {
   const GetUserInfo({super.key});
@@ -15,11 +16,40 @@ class GetUserInfo extends StatefulWidget {
 class GetUserInfoState extends State<GetUserInfo> {
   int size = 100;
   List<dynamic> userData = [];
+  Set<dynamic> selectedItems = Set<dynamic>();
+
+  late AnimationController _controller;
+  Route _createRoutes() {
+    return PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => const DisplayUserInfo(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(-1.0, 1.0);
+          const end = Offset.zero;
+          const curve = Curves.fastOutSlowIn;
+
+          final tween = Tween(begin: begin, end: end);
+          final curvedAnimation = CurvedAnimation(
+            parent: animation,
+            curve: curve,
+          );
+
+          return SlideTransition(
+            position: tween.animate(curvedAnimation),
+            child: child,
+          );
+        });
+  }
 
   @override
   void initState() {
     super.initState();
-    fetchData(); // Call the function to fetch data when the widget initializes
+    fetchData();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   void fetchData() async {
@@ -56,6 +86,7 @@ class GetUserInfoState extends State<GetUserInfo> {
     return Scaffold(
         backgroundColor: Colors.blueAccent,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.black,
           title: const Text(
             "Get User Info",
@@ -70,30 +101,21 @@ class GetUserInfoState extends State<GetUserInfo> {
                 child: ListView.builder(
                     itemCount: size,
                     itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        leading: CircleAvatar(
-                          //child: Icon(Icons.person)
-                          backgroundImage: NetworkImage("${userData[index]['picture']['thumbnail']}")
-                        
-                        ),
-                        dense: true,
-                        title: Text(
-                          "${'$index.'} ${userData[index]['name']['first']} ${userData[index]['name']['last']}",
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 20),
-                        ),
-                        subtitle: Text(
-                          "${userData[index]['email']}",
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 16),
-                        ),
-                        trailing: TextButton(
-                          onPressed: () {},
-                          style: TextButton.styleFrom(
-                              backgroundColor: Colors.white),
-                          child: const Icon(Icons.add),                        
-                        ),
-                      );
+                      var data = userData[index];
+                      return CustomListTile(
+                          data: data,
+                          index: index,
+                          isSelected: selectedItems.contains(index),
+                          onTap: (bool isSelected) {
+                            setState(() {
+                              if (isSelected) {
+                                selectedItems.add(index); // Add to selection
+                              } else {
+                                selectedItems
+                                    .remove(index); // Remove from selection
+                              }
+                            });
+                          });
                     }),
               )
             ]),
@@ -101,15 +123,33 @@ class GetUserInfoState extends State<GetUserInfo> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             FloatingActionButton(
-              child: const Icon(Icons.add),
               onPressed: () {
                 _getMoreUsers();
               },
+              backgroundColor: Colors.lightGreen,
+              child: const Icon(Icons.add),
+            ),
+            const SizedBox(width: 10),            
+            FloatingActionButton(
+              onPressed: () async {
+                if (selectedItems.isNotEmpty) {
+                  List<User> selectedUsers = [];
+                  for (int index in selectedItems) {
+                    var data = userData[index];                    
+                    selectedUsers.add(data);
+                  }
+                }
+              },
+              backgroundColor: Colors.lightGreen,
+              child: const Text('Save'),
             ),
             const SizedBox(width: 10),
             FloatingActionButton(
-              child: const Text('Save'),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(_createRoutes());
+              },
+              backgroundColor: Colors.lightGreen,
+              child: const Text('Next'),
             ),
           ],
         ));
